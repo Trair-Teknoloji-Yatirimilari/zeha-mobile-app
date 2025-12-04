@@ -61,7 +61,10 @@ export default function ProfileScreen() {
           <View style={styles.avatar}>
             <Ionicons name="person" size={48} color="#6366f1" />
           </View>
-          <Text style={styles.userName}>{user?.name}</Text>
+          <View style={styles.userNameRow}>
+            <Text style={styles.userName}>{user?.name}</Text>
+            {isPro() && <ProBadge size="medium" />}
+          </View>
           <Text style={styles.userEmail}>{user?.email}</Text>
           {user?.age && (
             <View style={styles.ageTag}>
@@ -69,6 +72,25 @@ export default function ProfileScreen() {
             </View>
           )}
         </View>
+
+        {/* Subscription Card */}
+        {!isPro() && (
+          <TouchableOpacity
+            style={styles.subscriptionCard}
+            onPress={() => router.push('/subscription' as any)}
+          >
+            <View style={styles.subscriptionIcon}>
+              <Ionicons name="star" size={32} color="#f59e0b" />
+            </View>
+            <View style={styles.subscriptionInfo}>
+              <Text style={styles.subscriptionTitle}>PRO'ya Geç</Text>
+              <Text style={styles.subscriptionDesc}>
+                Tüm özelliklerin kilidini aç
+              </Text>
+            </View>
+            <Ionicons name="chevron-forward" size={24} color="#f59e0b" />
+          </TouchableOpacity>
+        )}
 
         {/* Menu Items */}
         <View style={styles.menuSection}>
