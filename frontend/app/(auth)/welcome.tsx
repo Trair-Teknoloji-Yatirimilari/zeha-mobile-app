@@ -21,27 +21,27 @@ export default function WelcomeScreen() {
         {/* Logo/Header */}
         <View style={styles.header}>
           <View style={styles.iconContainer}>
-            <Ionicons name="chatbubbles" size={64} color="#6366f1" />
+            <Ionicons name="sparkles" size={64} color="#6366f1" />
           </View>
           <Text style={styles.title}>Zeha</Text>
           <Text style={styles.subtitle}>
-            Çocuklarınız için güvenli AI sohbet arkadaşı
+            Global Yapay Zeka Asistanı
           </Text>
         </View>
 
         {/* Features */}
         <View style={styles.features}>
           <View style={styles.featureItem}>
-            <Ionicons name="shield-checkmark" size={24} color="#10b981" />
-            <Text style={styles.featureText}>Güvenli ve Şifreli</Text>
+            <Ionicons name="sparkles" size={24} color="#6366f1" />
+            <Text style={styles.featureText}>Akıllı Sohbet</Text>
           </View>
           <View style={styles.featureItem}>
-            <Ionicons name="happy" size={24} color="#f59e0b" />
-            <Text style={styles.featureText}>Yaş Gruplarına Özel</Text>
+            <Ionicons name="globe" size={24} color="#10b981" />
+            <Text style={styles.featureText}>Tüm Dillerde Sohbet</Text>
           </View>
           <View style={styles.featureItem}>
-            <Ionicons name="people" size={24} color="#8b5cf6" />
-            <Text style={styles.featureText}>Ebeveyn Kontrolü</Text>
+            <Ionicons name="shield-checkmark" size={24} color="#8b5cf6" />
+            <Text style={styles.featureText}>Güvenli (Kids Mode ile)</Text>
           </View>
         </View>
 
