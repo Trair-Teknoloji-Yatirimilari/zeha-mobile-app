@@ -74,7 +74,7 @@ def test_auth_register():
     
     # Generate unique test user
     timestamp = int(time.time())
-    email = f"test_user_{timestamp}@zeha.test"
+    email = f"test_user_{timestamp}@gmail.com"
     password = f"TestPass123!{timestamp}"
     name = f"Test User {timestamp}"
     
