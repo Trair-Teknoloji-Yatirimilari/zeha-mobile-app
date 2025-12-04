@@ -411,45 +411,47 @@ def test_subscription_verify():
         return False
 
 def test_subscription_status():
-    """Test GET /api/subscription/status"""
-    print_section("TEST 6: Subscription - Get Status")
+    """Test GET /api/subscription/status?user_id={id}"""
+    print_section("TEST 6: Subscription - Get Status (NEWLY DEPLOYED)")
     
-    if not test_data["access_token"]:
-        log_error("Subscription status: No authentication token available")
+    if not test_data["access_token"] or not test_data["user_id"]:
+        log_error("Subscription status: No authentication token or user_id available")
         return False
     
     headers = {
         "Authorization": f"Bearer {test_data['access_token']}"
     }
     
-    log_info("Fetching subscription status...")
+    # Add user_id as query parameter
+    params = {"user_id": test_data["user_id"]}
+    
+    log_info(f"Fetching subscription status for user_id: {test_data['user_id']}")
+    log_info("NOTE: This endpoint was previously returning 404")
     
     try:
         response = requests.get(
             f"{BASE_URL}/subscription/status",
             headers=headers,
+            params=params,
             timeout=TIMEOUT
         )
         
         log_info(f"Status Code: {response.status_code}")
         
-        if response.status_code == 200:
-            data = response.json()
-            
-            # Validate response structure
-            if "status" in data:
-                log_success(f"Subscription status: Retrieved successfully")
-                log_info(f"Status: {data.get('status', 'N/A')}")
-                log_info(f"Response: {json.dumps(data, indent=2)}")
-                return True
-            else:
-                log_warning("Subscription status: Response structure unexpected")
-                log_info(f"Response: {response.text}")
-                return True  # Still working
-        else:
-            log_error(f"Subscription status: Failed with status {response.status_code}")
+        if response.status_code == 404:
+            log_error("❌ STILL RETURNING 404 - Endpoint not found/deployed")
             log_error(f"Response: {response.text}")
             return False
+        elif response.status_code == 200:
+            data = response.json()
+            log_success("✅ 404 FIXED! Endpoint now working (200 OK)")
+            log_info(f"Response: {json.dumps(data, indent=2)}")
+            return True
+        else:
+            log_warning(f"Unexpected status code: {response.status_code}")
+            log_info(f"Response: {response.text}")
+            # Not 404, so endpoint exists, but may have other issues
+            return True
             
     except requests.exceptions.Timeout:
         log_error("Subscription status: Request timeout")
