@@ -44,6 +44,7 @@ export default function TabLayout() {
         tabBarInactiveTintColor: '#94a3b8',
       }}
     >
+      {/* Kids user tabs */}
       {isKid && (
         <>
           <Tabs.Screen
@@ -67,73 +68,72 @@ export default function TabLayout() {
         </>
       )}
 
-      {isParent && (
+      {/* Adult user tabs */}
+      {isAdult && (
         <>
+          <Tabs.Screen
+            name="chat"
+            options={{
+              title: 'Sohbet',
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="chatbubbles" size={size} color={color} />
+              ),
+            }}
+          />
+          
+          {/* Parent Dashboard - PRO Feature */}
           <Tabs.Screen
             name="dashboard"
             options={{
-              title: 'Kontrol Paneli',
+              title: 'Parent',
               tabBarIcon: ({ color, size }) => (
-                <Ionicons name="grid" size={size} color={color} />
+                <>
+                  <Ionicons name="grid" size={size} color={color} />
+                  {!isPro() && (
+                    <Ionicons 
+                      name="lock-closed" 
+                      size={12} 
+                      color="#f59e0b" 
+                      style={{ position: 'absolute', top: -4, right: -4 }}
+                    />
+                  )}
+                </>
               ),
+              tabBarBadge: !isPro() ? '🔒' : undefined,
+            }}
+            listeners={{
+              tabPress: (e) => {
+                if (!isPro()) {
+                  e.preventDefault();
+                  handleLockedTabPress();
+                }
+              },
             }}
           />
+          
           <Tabs.Screen
-            name="kids"
+            name="profile"
             options={{
-              title: 'Çocuklar',
+              title: 'Profil',
               tabBarIcon: ({ color, size }) => (
-                <Ionicons name="people" size={size} color={color} />
-              ),
-            }}
-          />
-          <Tabs.Screen
-            name="settings"
-            options={{
-              title: 'Ayarlar',
-              tabBarIcon: ({ color, size }) => (
-                <Ionicons name="settings" size={size} color={color} />
+                <Ionicons name="person" size={size} color={color} />
               ),
             }}
           />
         </>
       )}
 
-      {!isKid && !isParent && (
-        <Tabs.Screen
-          name="chat"
-          options={{
-            title: 'Sohbet',
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="chatbubbles" size={size} color={color} />
-            ),
-          }}
-        />
-      )}
-
-      {/* Hide other tabs if not used */}
-      <Tabs.Screen
-        name="dashboard"
-        options={{
-          href: isParent ? undefined : null,
-        }}
-      />
+      {/* Hide unused tabs */}
       <Tabs.Screen
         name="kids"
         options={{
-          href: isParent ? undefined : null,
+          href: null,
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
-          href: isParent ? undefined : null,
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          href: isKid ? undefined : null,
+          href: null,
         }}
       />
     </Tabs>
