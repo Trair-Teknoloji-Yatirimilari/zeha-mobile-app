@@ -168,7 +168,10 @@ export default function KidsScreen() {
         )}
 
         {kids.length > 0 && kids.length < 2 && (
-          <TouchableOpacity style={styles.addKidCard}>
+          <TouchableOpacity
+            style={styles.addKidCard}
+            onPress={() => router.push('/add-kid' as any)}
+          >
             <Ionicons name="add-circle" size={32} color="#6366f1" />
             <Text style={styles.addKidText}>Yeni Çocuk Ekle</Text>
             <Text style={styles.addKidSubtext}>Maksimum 2 çocuk ekleyebilirsiniz</Text>
