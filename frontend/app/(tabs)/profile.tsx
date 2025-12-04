@@ -11,7 +11,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuthStore } from '../../lib/store/authStore';
+import { useSubscriptionStore } from '../../lib/store/subscriptionStore';
 import { authApi } from '../../lib/api/auth';
+import { ProBadge } from '../../components/subscription/ProBadge';
 
 export default function ProfileScreen() {
   const router = useRouter();
