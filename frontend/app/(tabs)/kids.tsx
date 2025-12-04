@@ -17,15 +17,36 @@ import { settingsApi } from '../../lib/api/settings';
 import { User, TimeSettings } from '../../types';
 
 export default function KidsScreen() {
+  const router = useRouter();
   const { user } = useAuthStore();
+  const { isPro } = useSubscriptionStore();
   const [kids, setKids] = useState<User[]>([]);
   const [timeSettings, setTimeSettings] = useState<Record<string, TimeSettings>>({});
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
+  // Redirect to subscription if not PRO
   useEffect(() => {
-    loadKids();
-  }, []);
+    if (!isPro()) {
+      Alert.alert(
+        '🔒 PRO Özelliği',
+        'Çocuk yönetimi sadece PRO üyeler için kullanılabilir.',
+        [
+          {
+            text: 'PRO\'ya Geç',
+            onPress: () => router.replace('/subscription' as any)
+          }
+        ],
+        { cancelable: false }
+      );
+    }
+  }, [isPro]);
+
+  useEffect(() => {
+    if (isPro()) {
+      loadKids();
+    }
+  }, [isPro]);
 
   const loadKids = async () => {
     try {
