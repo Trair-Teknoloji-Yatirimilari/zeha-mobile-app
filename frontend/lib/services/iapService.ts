@@ -38,6 +38,11 @@ class IAPService {
   }
 
   async getProducts() {
+    if (!this.isAvailable) {
+      console.warn('IAP not available');
+      return [];
+    }
+
     try {
       const { results } = await InAppPurchases.getProductsAsync([
         SUBSCRIPTION_PRODUCTS.PRO_MONTHLY,
@@ -50,6 +55,30 @@ class IAPService {
   }
 
   async purchaseProSubscription() {
+    if (!this.isAvailable) {
+      Alert.alert(
+        'Geliştirme Modu',
+        'IAP sadece native build\'de çalışır. Production\'da Apple/Google IAP aktif olacak.\n\nŞimdilik demo amaçlı subscription state değiştirilecek.',
+        [
+          { text: 'İptal', style: 'cancel' },
+          {
+            text: 'Demo PRO Aktif Et',
+            onPress: () => {
+              // Demo mode: Set PRO status
+              useSubscriptionStore.getState().setSubscription({
+                status: 'pro',
+                productId: SUBSCRIPTION_PRODUCTS.PRO_MONTHLY,
+                platform: Platform.OS === 'ios' ? 'ios' : 'android',
+                purchaseDate: new Date().toISOString(),
+              });
+              Alert.alert('✅ Demo', 'PRO demo modu aktif edildi!');
+            },
+          },
+        ]
+      );
+      return;
+    }
+
     try {
       await this.initialize();
 
