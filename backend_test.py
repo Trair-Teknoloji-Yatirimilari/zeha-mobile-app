@@ -225,7 +225,8 @@ def test_auth_me():
             
             log_success(f"Auth/me: User info retrieved successfully")
             log_info(f"User: {data['name']} ({data['email']})")
-            log_info(f"Role: {data['role']}")
+            if "role" in data:
+                log_info(f"Role: {data['role']}")
             return True
         else:
             log_error(f"Auth/me: Failed with status {response.status_code}")
