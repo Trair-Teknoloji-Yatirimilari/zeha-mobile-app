@@ -162,9 +162,9 @@ backend:
   
   - task: "Parent Dashboard API"
     implemented: true
-    working: true
+    working: false
     file: "External API - https://zeha.trairx.com/api/parent/*"
-    stuck_count: 0
+    stuck_count: 1
     priority: "medium"
     needs_retesting: false
     status_history:
@@ -174,6 +174,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "✓ PARTIALLY TESTED - GET /parent/dashboard: Working correctly, returns parent_id, kids array, and summary (total_kids, total_sessions, total_messages). GET /parent/alerts: Returns 404 (endpoint may not be implemented yet). Main dashboard endpoint working."
+      - working: false
+        agent: "testing"
+        comment: "❌ GET /parent/alerts?parent_id={id}: STILL RETURNING 404. Endpoint not found/deployed. Response: {success:false, error:'Not Found', status_code:404}. The /parent/dashboard endpoint works fine, but /parent/alerts remains undeployed. Tested on 2025-12-04."
   
   - task: "Settings API"
     implemented: true
