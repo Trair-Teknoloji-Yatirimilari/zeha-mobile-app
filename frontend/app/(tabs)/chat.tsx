@@ -476,5 +476,3 @@ const styles = StyleSheet.create({
     color: '#f8fafc',
   },
 });
-
-export default ChatScreen;
