@@ -26,7 +26,9 @@ export const chatApi = {
 
   // SSE streaming for real-time AI responses
   streamMessage: async (
-    data: SendMessageRequest,
+    sessionId: string,
+    message: string,
+    mode: string,
     onChunk: (chunk: string) => void,
     onComplete: (message: ChatMessage) => void,
     onError: (error: Error) => void
@@ -39,7 +41,11 @@ export const chatApi = {
           'Content-Type': 'application/json',
           'Authorization': token ? `Bearer ${token}` : '',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          session_id: sessionId,
+          message: message,
+          mode: mode
+        }),
       });
 
       if (!response.ok) {
