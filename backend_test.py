@@ -312,7 +312,8 @@ def test_chat_stream():
                         parsed = json.loads(data_part)
                         
                         # Extract text from various possible fields
-                        text = parsed.get('text') or parsed.get('content') or parsed.get('message') or ''
+                        # Backend sends {"chunk": "text"} format
+                        text = parsed.get('chunk') or parsed.get('text') or parsed.get('content') or parsed.get('message') or ''
                         
                         if text:
                             full_text += text
