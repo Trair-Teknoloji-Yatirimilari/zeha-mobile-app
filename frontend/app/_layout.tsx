@@ -5,7 +5,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useAuthStore } from '../lib/store/authStore';
 import { authApi } from '../lib/api/auth';
-import * as SecureStore from 'expo-secure-store';
+import { secureStorage } from '../lib/utils/storage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
