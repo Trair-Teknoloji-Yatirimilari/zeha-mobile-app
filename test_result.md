@@ -148,7 +148,6 @@ backend:
     file: "External API - https://zeha.trairx.com/api/subscription/*"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
     needs_retesting: false
     status_history:
       - working: "NA"
@@ -157,6 +156,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "✓ PARTIALLY TESTED - POST /subscription/verify: Working correctly, returns success with subscription object (status: pro, product_id, platform, expires_at). GET /subscription/status: Returns 404 (endpoint may not be implemented or requires different path). /cancel and /restore not tested. Main verify endpoint working which is most critical."
+      - working: true
+        agent: "testing"
+        comment: "✅ 404 FIXED! GET /subscription/status?user_id={id}: Now working correctly (200 OK). Returns complete subscription info: {success, status, is_active, is_pro, platform, product_id, started_at, expires_at, is_trial}. Endpoint was previously 404, now fully deployed and functional. Tested on 2025-12-04."
   
   - task: "Parent Dashboard API"
     implemented: true
