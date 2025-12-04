@@ -1,0 +1,99 @@
+<analysis>
+The user wants to build a React Native (Expo) application named Zeha, a global AI assistant with a specialized, parent-controlled Kids Mode. The project started with a detailed feature specification from the user.
+
+The development process involved several phases. Initially, I scaffolded the entire application structure, including navigation (Expo Router), state management (Zustand), and UI screens for authentication, chat, profile, and a parent dashboard.
+
+Key iterative refinements based on user feedback included:
+1.  **Repositioning:** Changing the app's branding from a kids chat app to a Global AI Assistant where Kids Mode is a specific feature.
+2.  **Security (COPPA):** Modifying the registration flow to prevent children from creating accounts directly. Instead, kid accounts can only be created by authenticated parents via a dedicated dashboard.
+3.  **Monetization:** Implementing a PRO subscription model using . The Parent Dashboard and related child-management features were placed behind this paywall.
+4.  **Backend Integration:** This was the most complex part, involving multiple rounds of testing and debugging. Initial tests revealed missing or non-functional endpoints. The breakthrough came after discovering that all protected endpoints required an  token. The final hurdle was a client-side issue with handling Server-Sent Events (SSE) for the chat stream, which was addressed by implementing the  library and increasing request timeouts.
+
+The primary language of the user is **Turkish**. All future responses should be in Turkish.
+</analysis>
+
+<product_requirements>
+The goal is to create Zeha, a global AI assistant mobile application for iOS and Android using React Native (Expo).
+
+**Core Product:**
+-   A general-purpose AI assistant capable of multilingual chat.
+-   A special, optional Kids Mode for users aged 4-15, which provides a safer, filtered experience.
+
+**Key Features:**
+1.  **Authentication:**
+    -   Account types: Adult (can become Parent), Guest.
+    -   Kid accounts are *not* created at registration; they are created by Parents.
+2.  **Parent Dashboard (PRO Feature):**
+    -   Accessible only to PRO subscribers.
+    -   Allows parents to create and manage up to two kid accounts.
+    -   View risk/security alerts and psychological health summaries for their children (without viewing message content).
+    -   Configure time settings (message limits, sleep/school hours).
+3.  **Kids Chat:**
+    -   Real-time, streaming chat with the AI using Server-Sent Events (SSE).
+    -   Supports text, emoji, image, and voice messages.
+    -   AI responses are tailored to age groups.
+4.  **Subscription System (PRO Membership):**
+    -   A  auto-renewable subscription (zeha_pro_monthly).
+    -   Implemented using Apple IAP and Google Play Billing.
+    -   Unlocks the Parent Dashboard and associated features.
+    -   Includes a Restore Purchases function.
+
+The application must be secure and compliant with regulations like COPPA.
+</product_requirements>
+
+<key_technical_concepts>
+- **React Native (Expo):** Core framework for cross-platform mobile development.
+- **Expo Router:** File-based routing for navigation.
+- **Zustand:** Lightweight state management for user authentication and session data.
+- **In-App Purchases:**  for handling Apple & Google subscriptions.
+- **Server-Sent Events (SSE):** For real-time chat message streaming from the backend. The  library was used on the client-side to handle this.
+- **Token-Based Authentication:** JWT tokens () are stored and sent in  headers for protected API requests.
+</key_technical_concepts>
+
+<code_architecture>
+The project follows a standard Expo Router file-based architecture. All screens and layouts are located within the  directory.
+
+**Directory Structure:**
+
+
+**Key Files:**
+-   ****: Root layout. Manages the initial routing logic based on authentication status using the  hook.
+-   ****: Defines the main tab navigation (Chat, Dashboard, Kids, Profile). It includes logic to hide the 'Dashboard' and 'Kids' tabs for non-PRO users, redirecting them to the subscription screen.
+-   ****: Zustand store to manage global state, including the user object, authentication token, and subscription status.
+-   ****: Axios instance configured with the base backend URL. It uses an interceptor to automatically attach the authentication token from  to outgoing requests.
+-   ****: Contains the  function, which was recently modified to use  to correctly handle real-time streaming from the  endpoint and includes an increased timeout. This file is critical for the core chat functionality.
+-   ****: Registration screen. This was modified to remove the Kid registration option to comply with security requirements, allowing only Adult and Guest sign-ups.
+-   ****: The paywall screen. It uses the  to fetch product details and initiate purchases. It was updated to conditionally disable IAP functionality in Expo Go (where it's unsupported) and show a developer notice.
+</code_architecture>
+
+<pending_tasks>
+- **Full End-to-End Testing:**
+    -   Test the complete chat streaming flow with the new  client-side implementation.
+    -   Verify the Add Kid functionality by a PRO user.
+    -   Test the Restore Purchases flow.
+- **Feature Implementation:**
+    -   Implement UI and logic for sending image and voice messages.
+    -   Integrate email alerts via the Resend API.
+- **Backend Dependent:**
+    -   The  endpoint was returning a 404 even after a successful purchase verification. This needs to be re-tested or investigated on the backend.
+</pending_tasks>
+
+<current_work>
+Immediately before this summary request, the focus was on fixing a critical bug where the real-time chat streaming was failing on the client side. The backend developer confirmed that the SSE stream endpoint () was working correctly, with tests showing a fast response time (1.58s). This pointed to a client-side handling issue.
+
+**The problem:** The frontend was likely using a standard  or  call that was timing out before the stream could be properly established and read.
+
+**The solution:** I was in the process of implementing a fix by updating the API service responsible for chat.
+1.  **Library Change:** The  file was modified to use the  library, which is specifically designed to handle Server-Sent Events.
+2.  **Timeout Increase:** A longer timeout was configured to give the connection ample time to establish and receive streaming data.
+3.  **Code Update:** The  function in  was refactored to incorporate these changes.
+
+The following code snippet in  was just updated:
+
+/chat/streamBearer 
+After applying this fix, the Expo development server was restarted to ensure the changes took effect. The next logical step is to test this fixed implementation.
+</current_work>
+
+<optional_next_step>
+Tamamdır! İstemci tarafındaki düzeltmeler tamamlandı. Şimdi, sohbet akışının (chat streaming) beklendiği gibi çalışıp çalışmadığını doğrulamak için uçtan uca bir test gerçekleştireceğim.
+</optional_next_step>

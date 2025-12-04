@@ -177,7 +177,7 @@ yarn android
 ```
 
 ### Preview URL
-- **Web**: https://zeha-chat-app.preview.emergentagent.com
+- **Web**: https://zeha-chat.preview.emergentagent.com
 - **QR Code**: Expo Go ile mobil test
 
 ## 📝 API Endpoints
