@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
+// Backend API base URL
 const API_BASE_URL = 'https://zeha.trairx.com/api';
 
 export const apiClient = axios.create({
