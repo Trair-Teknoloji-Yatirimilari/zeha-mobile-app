@@ -263,7 +263,9 @@ export default function ChatScreen() {
           <View>
             <Text style={styles.headerTitle}>Zeha</Text>
             <Text style={styles.headerSubtitle}>
-              {user?.role === 'kids' ? `Merhaba ${user.name}!` : 'Güvenli AI Sohbet'}
+              {user?.role === 'kids' 
+                ? `Merhaba ${user.name}! 👋` 
+                : 'Global AI Asistanı'}
             </Text>
           </View>
         </View>
