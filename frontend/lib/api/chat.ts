@@ -1,5 +1,5 @@
 import { apiClient } from './client';
-import { ChatMessage, SendMessageRequest } from '../../types';
+import { ChatMessage, SendMessageRequest, ChatMode } from '../../types';
 
 export const chatApi = {
   // Create chat session
