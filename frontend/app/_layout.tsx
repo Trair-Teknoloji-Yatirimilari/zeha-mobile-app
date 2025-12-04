@@ -22,7 +22,7 @@ export default function RootLayout() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const token = await SecureStore.getItemAsync('authToken');
+        const token = await secureStorage.getItem('authToken');
         if (token) {
           const user = await authApi.getCurrentUser();
           setUser(user);
