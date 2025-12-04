@@ -274,10 +274,17 @@ const styles = StyleSheet.create({
     paddingTop: 32,
   },
   roleTitle: {
-    fontSize: 20,
-    fontWeight: '600',
+    fontSize: 24,
+    fontWeight: 'bold',
     color: '#f8fafc',
-    marginBottom: 24,
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  roleSubtitle: {
+    fontSize: 14,
+    color: '#94a3b8',
+    marginBottom: 32,
+    textAlign: 'center',
   },
   roleCard: {
     flexDirection: 'row',
