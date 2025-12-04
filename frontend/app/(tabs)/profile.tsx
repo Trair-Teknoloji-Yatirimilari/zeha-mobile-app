@@ -18,6 +18,7 @@ import { ProBadge } from '../../components/subscription/ProBadge';
 export default function ProfileScreen() {
   const router = useRouter();
   const { user, logout } = useAuthStore();
+  const { isPro } = useSubscriptionStore();
 
   const handleLogout = async () => {
     Alert.alert(
