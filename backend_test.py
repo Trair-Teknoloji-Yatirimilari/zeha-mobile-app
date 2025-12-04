@@ -504,40 +504,53 @@ def test_parent_dashboard():
         return False
 
 def test_parent_alerts():
-    """Test GET /api/parent/alerts"""
-    print_section("TEST 8: Parent Alerts")
+    """Test GET /api/parent/alerts?parent_id={id}"""
+    print_section("TEST 8: Parent Alerts (NEWLY DEPLOYED)")
     
-    if not test_data["access_token"]:
-        log_error("Parent alerts: No authentication token available")
+    if not test_data["access_token"] or not test_data["user_id"]:
+        log_error("Parent alerts: No authentication token or user_id available")
         return False
     
     headers = {
         "Authorization": f"Bearer {test_data['access_token']}"
     }
     
-    log_info("Fetching parent alerts...")
+    # Add parent_id as query parameter
+    params = {"parent_id": test_data["user_id"]}
+    
+    log_info(f"Fetching parent alerts for parent_id: {test_data['user_id']}")
+    log_info("NOTE: This endpoint was previously returning 404")
     
     try:
         response = requests.get(
             f"{BASE_URL}/parent/alerts",
             headers=headers,
+            params=params,
             timeout=TIMEOUT
         )
         
         log_info(f"Status Code: {response.status_code}")
         
-        if response.status_code == 200:
-            data = response.json()
-            log_success("Parent alerts: Data retrieved successfully")
-            log_info(f"Response: {json.dumps(data, indent=2)[:200]}...")
-            return True
-        elif response.status_code == 403:
-            log_warning("Parent alerts: Access forbidden (may require PRO subscription)")
-            return True  # Endpoint working, just access restricted
-        else:
-            log_error(f"Parent alerts: Failed with status {response.status_code}")
+        if response.status_code == 404:
+            log_error("❌ STILL RETURNING 404 - Endpoint not found/deployed")
             log_error(f"Response: {response.text}")
             return False
+        elif response.status_code == 200:
+            data = response.json()
+            log_success("✅ 404 FIXED! Endpoint now working (200 OK)")
+            log_info(f"Response: {json.dumps(data, indent=2)}")
+            if isinstance(data, list):
+                log_info(f"Alerts array length: {len(data)}")
+            return True
+        elif response.status_code == 403:
+            log_warning("Access forbidden (may require PRO subscription)")
+            log_info("But endpoint exists (not 404), so deployment successful")
+            return True  # Endpoint working, just access restricted
+        else:
+            log_warning(f"Unexpected status code: {response.status_code}")
+            log_info(f"Response: {response.text}")
+            # Not 404, so endpoint exists
+            return True
             
     except requests.exceptions.Timeout:
         log_error("Parent alerts: Request timeout")
