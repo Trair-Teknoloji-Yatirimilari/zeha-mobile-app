@@ -23,9 +23,14 @@ export default function SubscriptionScreen() {
   const { isPro, subscription } = useSubscriptionStore();
   const [loading, setLoading] = useState(false);
   const [restoring, setRestoring] = useState(false);
+  const [isIAPAvailable, setIsIAPAvailable] = useState(false);
 
   // Check if Kids account
   const isKids = user?.role === 'kids';
+
+  useEffect(() => {
+    setIsIAPAvailable(iapService.isIAPAvailable());
+  }, []);
 
   const handleSubscribe = async () => {
     if (isKids) {
