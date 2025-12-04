@@ -33,6 +33,11 @@ export const SUBSCRIPTION_PRODUCTS = {
 // PRO Features
 export const PRO_FEATURES = [
   {
+    icon: 'people',
+    title: 'Parent Dashboard',
+    description: 'Çocuklarınızı takip edin ve yönetin',
+  },
+  {
     icon: 'flash',
     title: 'Sınırsız Mesaj',
     description: 'Günlük mesaj limiti yok',
