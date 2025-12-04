@@ -1,0 +1,38 @@
+import axios from 'axios';
+import * as SecureStore from 'expo-secure-store';
+
+const API_BASE_URL = 'https://zeha.trairx.com/api';
+
+export const apiClient = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  timeout: 30000,
+});
+
+// Request interceptor to add auth token
+apiClient.interceptors.request.use(
+  async (config) => {
+    const token = await SecureStore.getItemAsync('authToken');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor for error handling
+apiClient.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response?.status === 401) {
+      // Clear token on unauthorized
+      await SecureStore.deleteItemAsync('authToken');
+    }
+    return Promise.reject(error);
+  }
+);
