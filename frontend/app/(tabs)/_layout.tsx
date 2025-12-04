@@ -1,12 +1,32 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { TouchableOpacity, Alert } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useAuthStore } from '../../lib/store/authStore';
+import { useSubscriptionStore } from '../../lib/store/subscriptionStore';
 
 export default function TabLayout() {
+  const router = useRouter();
   const { user } = useAuthStore();
-  const isParent = user?.role === 'parent';
+  const { isPro } = useSubscriptionStore();
   const isKid = user?.role === 'kids';
+  const isAdult = user?.role === 'adult';
+  
+  // Handle locked tab press
+  const handleLockedTabPress = () => {
+    Alert.alert(
+      '🔒 PRO Özelliği',
+      'Parent Dashboard sadece PRO üyeler için kullanılabilir. PRO\'ya geçerek çocuklarınızı takip edebilirsiniz.',
+      [
+        { text: 'İptal', style: 'cancel' },
+        { 
+          text: 'PRO\'ya Geç',
+          onPress: () => router.push('/subscription' as any)
+        }
+      ]
+    );
+  };
 
   return (
     <Tabs
