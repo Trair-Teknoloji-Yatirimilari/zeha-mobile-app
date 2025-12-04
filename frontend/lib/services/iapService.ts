@@ -175,10 +175,15 @@ class IAPService {
   }
 
   async disconnect() {
-    if (this.isInitialized) {
+    if (this.isAvailable && this.isInitialized) {
       await InAppPurchases.disconnectAsync();
       this.isInitialized = false;
     }
+  }
+  
+  // Check if IAP is available
+  isIAPAvailable(): boolean {
+    return this.isAvailable;
   }
 }
 
