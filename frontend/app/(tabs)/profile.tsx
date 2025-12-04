@@ -185,11 +185,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 16,
   },
+  userNameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 4,
+  },
   userName: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#f8fafc',
-    marginBottom: 4,
   },
   userEmail: {
     fontSize: 14,
