@@ -1,6 +1,6 @@
 import { apiClient } from './client';
 import { LoginRequest, RegisterRequest, AuthResponse } from '../../types';
-import * as SecureStore from 'expo-secure-store';
+import { secureStorage } from '../utils/storage';
 
 export const authApi = {
   login: async (data: LoginRequest): Promise<AuthResponse> => {
