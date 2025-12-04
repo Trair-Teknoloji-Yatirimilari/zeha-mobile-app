@@ -267,4 +267,36 @@ const styles = StyleSheet.create({
     marginTop: 24,
     marginBottom: 32,
   },
+  subscriptionCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1e293b',
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 24,
+    borderWidth: 2,
+    borderColor: '#f59e0b',
+  },
+  subscriptionIcon: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#451a03',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  subscriptionInfo: {
+    flex: 1,
+  },
+  subscriptionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#f8fafc',
+    marginBottom: 4,
+  },
+  subscriptionDesc: {
+    fontSize: 14,
+    color: '#94a3b8',
+  },
 });
