@@ -310,6 +310,22 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#cbd5e1',
   },
+  devModeBox: {
+    flexDirection: 'row',
+    backgroundColor: '#1e3a8a',
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 16,
+    gap: 12,
+    borderWidth: 1,
+    borderColor: '#3b82f6',
+  },
+  devModeText: {
+    flex: 1,
+    fontSize: 13,
+    color: '#dbeafe',
+    lineHeight: 18,
+  },
   warningBox: {
     flexDirection: 'row',
     backgroundColor: '#451a03',
