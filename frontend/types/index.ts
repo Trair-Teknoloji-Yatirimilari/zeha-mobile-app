@@ -1,5 +1,5 @@
 // User Types
-export type UserRole = 'adult' | 'kids' | 'parent';
+export type UserRole = 'adult' | 'kids';
 
 export interface User {
   id: string;
