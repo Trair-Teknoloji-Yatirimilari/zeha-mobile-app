@@ -220,6 +220,66 @@ frontend:
       - working: "NA"
         agent: "main"
         comment: "Fixed hardcoded URL bug. Now using API_BASE_URL variable. SSE streaming implementation with fetch API ready. Needs testing."
+  
+  - task: "Authentication Flow (Registration & Login)"
+    implemented: true
+    working: false
+    file: "/app/frontend/app/(auth)/register.tsx, /app/frontend/app/(auth)/login.tsx, /app/frontend/lib/api/auth.ts"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL BUG: expo-secure-store not working in web environment. Console error: 'ExpoSecureStore.default.getValueWithKeyAsync is not a function'. This blocks ALL authentication flows (registration, login, logout, token storage). UI renders correctly - registration form displays with all fields (name, email, password), role selection works. But token storage fails, preventing successful auth. MUST FIX: Replace expo-secure-store with web-compatible storage (AsyncStorage or conditional platform-based storage)."
+  
+  - task: "Chat Screen UI"
+    implemented: true
+    working: true
+    file: "/app/frontend/app/(tabs)/chat.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ Chat screen UI loads correctly. Header displays 'Zeha' branding. GiftedChat component renders. Mode selector button visible in header. However, chat input not accessible during testing (likely due to auth issues from SecureStore bug). Visual verification: Chat screen structure is correct."
+  
+  - task: "Mode Selector Modal"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/app/(tabs)/chat.tsx"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "⚠️ Could not test mode selector modal functionality. Modal button exists in header but couldn't trigger it during automated testing. Needs manual verification or improved test selectors. Expected: Modal should show 5 modes (Genel, Öğretmen, Ödev, Eğlence, Destek)."
+  
+  - task: "Subscription Screen"
+    implemented: true
+    working: true
+    file: "/app/frontend/app/subscription.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ FULLY WORKING! All elements verified: (1) Pricing: $9.90/month displayed correctly, (2) PRO branding: 'Zeha PRO' title visible, (3) Restore Purchases button: 'Satın Alımları Geri Yükle' present, (4) Subscribe button: 'PRO'ya Geç - $9.90/ay' visible, (5) PRO features list: Parent Dashboard, Sınırsız Mesaj, Öncelikli Yanıt displayed. Development mode banner correctly shows IAP only works in native build. UI is polished and professional."
+  
+  - task: "Profile Screen"
+    implemented: true
+    working: true
+    file: "/app/frontend/app/(tabs)/profile.tsx"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ Profile screen UI renders correctly. Shows: Profile header, avatar placeholder, PRO upgrade card ('PRO'ya Geç'), menu items (Sohbet Geçmişi, Ayarlar, Gizlilik, Yardım), logout button ('Çıkış Yap' in red). User data not displayed during test due to auth issues. Logout button functional but redirect blocked by SecureStore bug."
 
 metadata:
   created_by: "main_agent"
