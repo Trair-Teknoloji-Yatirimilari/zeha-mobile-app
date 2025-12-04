@@ -26,6 +26,7 @@ export const chatApi = {
 
   // SSE streaming for real-time AI responses
   streamMessage: async (
+    userId: string,
     sessionId: string,
     message: string,
     mode: string,
@@ -34,18 +35,31 @@ export const chatApi = {
     onError: (error: Error) => void
   ) => {
     try {
-      const token = await import('expo-secure-store').then(m => m.getItemAsync('authToken'));
+      const SecureStore = await import('expo-secure-store');
+      const token = await SecureStore.getItemAsync('authToken');
+      
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+
+      // Increased timeout to 30 seconds
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
+
       const response = await fetch('https://zeha.trairx.com/api/chat/stream', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': token ? `Bearer ${token}` : '',
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'text/event-stream',
         },
         body: JSON.stringify({
+          user_id: userId,
           session_id: sessionId,
           message: message,
           mode: mode
         }),
+        signal: controller.signal,
       });
 
       if (!response.ok) {
