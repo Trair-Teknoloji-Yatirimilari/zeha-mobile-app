@@ -29,7 +29,7 @@ export const chatApi = {
     userId: string,
     sessionId: string,
     message: string,
-    mode: string,
+    mode: ChatMode,
     onChunk: (chunk: string) => void,
     onComplete: (message: ChatMessage) => void,
     onError: (error: Error) => void
