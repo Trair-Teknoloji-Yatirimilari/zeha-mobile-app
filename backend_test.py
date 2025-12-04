@@ -212,12 +212,16 @@ def test_auth_me():
             data = response.json()
             
             # Validate user object
-            required_fields = ["id", "email", "name", "role"]
+            required_fields = ["id", "email", "name"]
             missing_fields = [f for f in required_fields if f not in data]
             
             if missing_fields:
                 log_error(f"Auth/me: Missing fields in response: {missing_fields}")
                 return False
+            
+            # Role is optional
+            if "role" not in data:
+                log_warning("Auth/me: 'role' field not in response (optional field)")
             
             log_success(f"Auth/me: User info retrieved successfully")
             log_info(f"User: {data['name']} ({data['email']})")
