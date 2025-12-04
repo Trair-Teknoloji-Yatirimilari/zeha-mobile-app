@@ -7,11 +7,20 @@ import {
 
 export const subscriptionApi = {
   // Verify purchase with backend
-  verifyPurchase: async (data: PurchaseVerification): Promise<SubscriptionResponse> => {
+  verifyPurchase: async (
+    userId: string,
+    data: PurchaseVerification
+  ): Promise<SubscriptionResponse> => {
     try {
       const response = await apiClient.post<SubscriptionResponse>(
         '/subscription/verify',
-        data
+        {
+          user_id: userId,
+          transaction_id: data.transactionId,
+          product_id: data.productId,
+          platform: data.platform,
+          receipt: data.receipt,
+        }
       );
       return response.data;
     } catch (error) {
