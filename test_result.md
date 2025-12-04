@@ -370,3 +370,44 @@ agent_communication:
       The deployment attempt appears to have failed or the endpoint was not properly registered.
       
       RECOMMENDATION: User needs to verify backend deployment and ensure the /parent/alerts route is properly configured.
+  - agent: "testing"
+    message: |
+      🔴 FRONTEND UI TESTING COMPLETED (2025-12-04) - CRITICAL BUG FOUND
+      
+      ❌ BLOCKING ISSUE: expo-secure-store NOT COMPATIBLE WITH WEB
+      Console Error: "ExpoSecureStore.default.getValueWithKeyAsync is not a function"
+      
+      Impact: ALL authentication flows are broken (registration, login, logout, token storage)
+      
+      📊 TEST RESULTS:
+      
+      ✅ WORKING (3 screens):
+      1. Subscription Screen - All elements perfect ($9.90 pricing, PRO features, restore button)
+      2. Profile Screen - UI renders correctly (avatar, menu items, logout button)
+      3. Chat Screen UI - Loads correctly with Zeha branding and GiftedChat component
+      
+      ❌ BROKEN (1 critical):
+      1. Authentication Flow - SecureStore error prevents token storage
+         - Registration UI works (form displays, role selection functional)
+         - Login UI works (form displays correctly)
+         - But token storage fails, blocking auth completion
+      
+      ⚠️ NEEDS VERIFICATION (1):
+      1. Mode Selector Modal - Button exists but couldn't trigger in automated test
+      2. SSE Streaming - Cannot test without working authentication
+      
+      🔧 REQUIRED FIX:
+      Replace expo-secure-store with web-compatible storage solution:
+      - Option 1: Use @react-native-async-storage/async-storage (works on web + native)
+      - Option 2: Conditional storage (localStorage for web, SecureStore for native)
+      - Option 3: Use Platform.select() to choose storage based on platform
+      
+      Files to update:
+      - /app/frontend/lib/api/auth.ts (lines 9-10, 25)
+      - /app/frontend/lib/api/client.ts (lines 18, 35)
+      - /app/frontend/lib/api/chat.ts (line 39)
+      
+      📸 Screenshots: 20 screenshots saved to .screenshots/ directory
+      📋 Console logs: Saved with repeated SecureStore errors
+      
+      PRIORITY: HIGH - This blocks all user authentication and testing of chat features.
