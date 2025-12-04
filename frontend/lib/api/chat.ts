@@ -35,8 +35,8 @@ export const chatApi = {
     onError: (error: Error) => void
   ) => {
     try {
-      const SecureStore = await import('expo-secure-store');
-      const token = await SecureStore.getItemAsync('authToken');
+      const { secureStorage } = await import('../utils/storage');
+      const token = await secureStorage.getItem('authToken');
       
       if (!token) {
         throw new Error('No authentication token found');
