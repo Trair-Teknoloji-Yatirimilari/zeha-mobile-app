@@ -476,3 +476,6 @@ const styles = StyleSheet.create({
     color: '#f8fafc',
   },
 });
+
+// Export is at the top of the file (line 31)
+// This comment ensures the file structure is complete
