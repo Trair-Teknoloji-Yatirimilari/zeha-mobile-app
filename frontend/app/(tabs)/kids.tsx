@@ -11,6 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuthStore } from '../../lib/store/authStore';
+import { useSubscriptionStore } from '../../lib/store/subscriptionStore';
 import { dashboardApi } from '../../lib/api/dashboard';
 import { settingsApi } from '../../lib/api/settings';
 import { User, TimeSettings } from '../../types';
