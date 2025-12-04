@@ -1,3 +1,4 @@
+import React from 'react';
 import { create } from 'zustand';
 import { ChatMode, ChatMessage } from '../../types';
 
