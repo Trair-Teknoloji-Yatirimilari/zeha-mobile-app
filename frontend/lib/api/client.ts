@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as SecureStore from 'expo-secure-store';
+import { secureStorage } from '../utils/storage';
 
 // Backend API base URL
 const API_BASE_URL = 'https://zeha.trairx.com/api';
