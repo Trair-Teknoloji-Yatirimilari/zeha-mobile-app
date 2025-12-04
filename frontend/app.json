@@ -1,21 +1,41 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
+    "name": "Zeha",
+    "slug": "zeha-ai-assistant",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "frontend",
+    "scheme": "zeha",
     "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0f172a"
+    },
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.trairx.zeha",
+      "buildNumber": "1.0.0",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Zeha uses your camera to capture images for chat conversations.",
+        "NSMicrophoneUsageDescription": "Zeha uses your microphone to record voice messages.",
+        "NSPhotoLibraryUsageDescription": "Zeha needs access to your photos to share images in chat."
+      }
     },
     "android": {
+      "package": "com.trairx.zeha",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#000"
+        "backgroundColor": "#0f172a"
       },
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ],
       "edgeToEdgeEnabled": true
     },
     "web": {
