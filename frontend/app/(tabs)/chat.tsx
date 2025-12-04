@@ -31,9 +31,9 @@ const CHAT_MODES = [
 export default function ChatScreen() {
   const { user } = useAuthStore();
   const { messages, currentMode, isStreaming, streamingText, setMessages, addMessage, setCurrentMode, setStreaming, setStreamingText, clearStreamingText } = useChatStore();
-  const [giftedMessages, setGiftedMessages] = useState<IMessage[]>([]);
+  const [giftedMessages, setGiftedMessages] = useState([]);
   const [showModeSelector, setShowModeSelector] = useState(false);
-  const [recording, setRecording] = useState<Audio.Recording | null>(null);
+  const [recording, setRecording] = useState(null);
   const [isLoadingMessages, setIsLoadingMessages] = useState(true);
 
   // Load chat history on mount
