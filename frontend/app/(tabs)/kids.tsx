@@ -157,7 +157,10 @@ export default function KidsScreen() {
             <Text style={styles.emptyStateText}>
               Çocuklarınızı ekleyerek onları güvenli bir şekilde takip edebilirsiniz
             </Text>
-            <TouchableOpacity style={styles.emptyStateButton}>
+            <TouchableOpacity
+              style={styles.emptyStateButton}
+              onPress={() => router.push('/add-kid' as any)}
+            >
               <Ionicons name="add" size={20} color="#ffffff" />
               <Text style={styles.emptyStateButtonText}>Çocuk Ekle</Text>
             </TouchableOpacity>
