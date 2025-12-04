@@ -4,18 +4,24 @@ Zeha, tüm dillerde akıllı sohbet yapabilen global bir AI asistanıdır. ChatG
 
 ## 🚀 Özellikler
 
-### Kids Chat (Çocuk Sohbeti)
-- ✅ **AI Sohbet**: Zeha AI ile doğal dilde sohbet
-- ✅ **Çoklu Mesaj Türü**: Text, emoji, resim ve sesli mesaj desteği
+### Global AI Asistanı
+- ✅ **Akıllı Sohbet**: ChatGPT benzeri doğal dil işleme
+- ✅ **Çok Dilli Destek**: Tüm dillerde sohbet ve dil analizi
+- ✅ **Genel Amaçlı**: Her türlü soru ve görev için kullanılabilir
+- ✅ **Çoklu Mesaj Türü**: Text, emoji, resim ve sesli mesaj
 - ✅ **Real-time Streaming**: SSE ile anlık AI yanıtları
-- ✅ **Gizli Mod Sistemi**: 
+- ✅ **Mod Sistemi**: 
   - Öğretmen Modu
   - Ödev Yardımı
   - Eğlence
   - Destek
   - Genel Sohbet
+
+### Kids Mode (Özel Özellik)
+- ✅ **user_type === 'kids'** olunca aktif olur
 - ✅ **Yaş Gruplarına Özel**: 4-6, 7-9, 10-12, 13-15 yaş grupları
 - ✅ **Otomatik Güvenlik Filtreleme**
+- ✅ **Ebeveyn kontrolü** ekstra katman
 
 ### Parent Dashboard (Ebeveyn Kontrol Paneli)
 - ✅ **Risk/Güvenlik Uyarıları**: Kritik, yüksek, orta, düşük seviye uyarılar
