@@ -142,6 +142,17 @@ export default function SubscriptionScreen() {
           </Text>
         </View>
 
+        {/* Development Mode Banner */}
+        {!isIAPAvailable && (
+          <View style={styles.devModeBox}>
+            <Ionicons name="construct" size={20} color="#3b82f6" />
+            <Text style={styles.devModeText}>
+              <Text style={{ fontWeight: 'bold' }}>Geliştirme Modu:</Text> IAP sadece native build'de çalışır. 
+              Test için "Demo PRO Aktif Et" kullanabilirsiniz.
+            </Text>
+          </View>
+        )}
+
         {/* Kids Account Warning */}
         {isKids && (
           <View style={styles.warningBox}>
