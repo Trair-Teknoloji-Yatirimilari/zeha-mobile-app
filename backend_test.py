@@ -458,7 +458,7 @@ def test_subscription_status():
         return False
 
 def test_parent_dashboard():
-    """Test POST /api/parent/dashboard"""
+    """Test GET /api/parent/dashboard"""
     print_section("TEST 7: Parent Dashboard")
     
     if not test_data["access_token"]:
@@ -466,17 +466,15 @@ def test_parent_dashboard():
         return False
     
     headers = {
-        "Authorization": f"Bearer {test_data['access_token']}",
-        "Content-Type": "application/json"
+        "Authorization": f"Bearer {test_data['access_token']}"
     }
     
     log_info("Fetching parent dashboard data...")
     
     try:
-        response = requests.post(
+        response = requests.get(
             f"{BASE_URL}/parent/dashboard",
             headers=headers,
-            json={},
             timeout=TIMEOUT
         )
         
