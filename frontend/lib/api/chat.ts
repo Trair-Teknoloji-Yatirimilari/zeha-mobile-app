@@ -42,11 +42,14 @@ export const chatApi = {
         throw new Error('No authentication token found');
       }
 
+      // Backend API base URL - same as in client.ts
+      const API_BASE_URL = 'https://zeha.trairx.com/api';
+
       // Increased timeout to 30 seconds
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 30000);
 
-      const response = await fetch('https://zeha.trairx.com/api/chat/stream', {
+      const response = await fetch(`${API_BASE_URL}/chat/stream`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
