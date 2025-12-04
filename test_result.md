@@ -295,11 +295,16 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Authentication API"
-    - "Chat Streaming API (SSE)"
-  stuck_tasks: []
+    - "Authentication Flow (Registration & Login)"
+  stuck_tasks:
+    - "Authentication Flow (Registration & Login)"
   test_all: false
   test_priority: "high_first"
+  notes: |
+    Frontend UI testing completed on 2025-12-04.
+    CRITICAL BUG FOUND: expo-secure-store not compatible with web environment.
+    This blocks all authentication functionality.
+    Main agent must fix SecureStore implementation before auth can work.
 
 agent_communication:
   - agent: "main"
