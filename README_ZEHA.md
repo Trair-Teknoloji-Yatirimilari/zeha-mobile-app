@@ -1,6 +1,6 @@
-# Zeha - Güvenli Çocuk AI Sohbet Uygulaması 🧒💬
+# Zeha - Global Yapay Zeka Asistanı 🌍✨
 
-Zeha, çocukların güvenli bir ortamda AI ile sohbet edebileceği ve ebeveynlerin çocuklarını takip edebileceği bir React Native mobil uygulamasıdır.
+Zeha, tüm dillerde akıllı sohbet yapabilen global bir AI asistanıdır. ChatGPT benzeri genel amaçlı yapay zeka platformu olarak tasarlanmış olup, **Kids Mode** özelliği ile çocuklar için ekstra güvenlik katmanı sağlar.
 
 ## 🚀 Özellikler
 
