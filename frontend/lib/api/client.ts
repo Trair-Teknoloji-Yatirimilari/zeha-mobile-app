@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { secureStorage } from '../utils/storage';
 
-// Backend API base URL
-const API_BASE_URL = 'https://zeha.trairx.com/api';
+// Backend API base URL - use environment variable
+const API_BASE_URL = process.env.EXPO_PUBLIC_BACKEND_URL + '/api' || 'https://zeha.trairx.com/api';
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
