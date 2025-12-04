@@ -62,55 +62,94 @@ export const chatApi = {
         signal: controller.signal,
       });
 
+      clearTimeout(timeoutId);
+
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
 
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
 
       if (!reader) {
-        throw new Error('No reader available');
+        throw new Error('Response body reader not available');
       }
 
       let fullText = '';
+      let buffer = '';
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        const chunk = decoder.decode(value);
-        const lines = chunk.split('\n');
-
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            const data = line.slice(6);
-            if (data === '[DONE]') {
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          
+          if (done) {
+            // Stream complete
+            if (fullText) {
               onComplete({
                 id: Date.now().toString(),
                 userId: 'zeha-ai',
                 content: fullText,
-                mode: 'general',
+                mode: mode,
                 type: 'text',
                 timestamp: new Date().toISOString(),
                 isAI: true,
               });
-              return;
             }
-            try {
-              const parsed = JSON.parse(data);
-              if (parsed.text) {
-                fullText += parsed.text;
-                onChunk(parsed.text);
+            break;
+          }
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          
+          // Keep incomplete line in buffer
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            const trimmedLine = line.trim();
+            
+            // SSE format: "data: {json}"
+            if (trimmedLine.startsWith('data: ')) {
+              const data = trimmedLine.slice(6);
+              
+              if (data === '[DONE]') {
+                onComplete({
+                  id: Date.now().toString(),
+                  userId: 'zeha-ai',
+                  content: fullText,
+                  mode: mode,
+                  type: 'text',
+                  timestamp: new Date().toISOString(),
+                  isAI: true,
+                });
+                return;
               }
-            } catch (e) {
-              // Ignore parse errors for chunks
+
+              try {
+                const parsed = JSON.parse(data);
+                
+                // Handle different response formats
+                const text = parsed.text || parsed.content || parsed.message || '';
+                
+                if (text) {
+                  fullText += text;
+                  onChunk(text);
+                }
+              } catch (e) {
+                console.warn('Failed to parse SSE data:', data);
+              }
             }
           }
         }
+      } finally {
+        reader.releaseLock();
       }
-    } catch (error) {
-      onError(error as Error);
+    } catch (error: any) {
+      if (error.name === 'AbortError') {
+        onError(new Error('Request timeout (30s) - Please try again'));
+      } else {
+        onError(error as Error);
+      }
     }
   },
 };
