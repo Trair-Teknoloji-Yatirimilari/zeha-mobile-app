@@ -11,8 +11,10 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuthStore } from '../../lib/store/authStore';
+import { useSubscriptionStore } from '../../lib/store/subscriptionStore';
 import { dashboardApi } from '../../lib/api/dashboard';
 import { DashboardData, RiskAlert } from '../../types';
+import { ProBadge } from '../../components/subscription/ProBadge';
 
 export default function DashboardScreen() {
   const { user } = useAuthStore();
