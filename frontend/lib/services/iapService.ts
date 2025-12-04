@@ -95,12 +95,23 @@ class IAPService {
                 const platform: SubscriptionPlatform =
                   Platform.OS === 'ios' ? 'ios' : 'android';
 
-                const verifyResponse = await subscriptionApi.verifyPurchase({
-                  transactionId: purchase.orderId || '',
-                  productId: purchase.productId,
-                  platform,
-                  receipt: JSON.stringify(purchase),
-                });
+                // Get user ID from auth store
+                const { useAuthStore } = await import('../store/authStore');
+                const userId = useAuthStore.getState().user?.id;
+                
+                if (!userId) {
+                  throw new Error('User ID not found');
+                }
+
+                const verifyResponse = await subscriptionApi.verifyPurchase(
+                  userId,
+                  {
+                    transactionId: purchase.orderId || '',
+                    productId: purchase.productId,
+                    platform,
+                    receipt: JSON.stringify(purchase),
+                  }
+                );
 
                 if (verifyResponse.success) {
                   // Update store
