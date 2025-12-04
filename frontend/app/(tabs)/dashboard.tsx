@@ -17,14 +17,35 @@ import { DashboardData, RiskAlert } from '../../types';
 import { ProBadge } from '../../components/subscription/ProBadge';
 
 export default function DashboardScreen() {
+  const router = useRouter();
   const { user } = useAuthStore();
+  const { isPro } = useSubscriptionStore();
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
+  // Redirect to subscription if not PRO
   useEffect(() => {
-    loadDashboard();
-  }, []);
+    if (!isPro()) {
+      Alert.alert(
+        '🔒 PRO Özelliği',
+        'Parent Dashboard sadece PRO üyeler için kullanılabilir.',
+        [
+          {
+            text: 'PRO\'ya Geç',
+            onPress: () => router.replace('/subscription' as any)
+          }
+        ],
+        { cancelable: false }
+      );
+    }
+  }, [isPro]);
+
+  useEffect(() => {
+    if (isPro()) {
+      loadDashboard();
+    }
+  }, [isPro]);
 
   const loadDashboard = async () => {
     try {
