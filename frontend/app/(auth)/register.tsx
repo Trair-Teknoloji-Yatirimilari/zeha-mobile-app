@@ -78,53 +78,57 @@ export default function RegisterScreen() {
           >
             <Ionicons name="arrow-back" size={24} color="#f8fafc" />
           </TouchableOpacity>
-          <Text style={styles.title}>Hesap Türü</Text>
+          <Text style={styles.title}>Kayıt Ol</Text>
           <View style={{ width: 40 }} />
         </View>
 
         <View style={styles.roleContainer}>
-          <Text style={styles.roleTitle}>Kim olarak kaydoluyorsunuz?</Text>
-
-          <TouchableOpacity
-            style={styles.roleCard}
-            onPress={() => handleRoleSelect('kids')}
-          >
-            <View style={[styles.roleIcon, { backgroundColor: '#3b82f6' }]}>
-              <Ionicons name="happy" size={40} color="#ffffff" />
-            </View>
-            <View style={styles.roleInfo}>
-              <Text style={styles.roleName}>Çocuk</Text>
-              <Text style={styles.roleDesc}>4-15 yaş arası kullanıcılar</Text>
-            </View>
-            <Ionicons name="chevron-forward" size={24} color="#94a3b8" />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.roleCard}
-            onPress={() => handleRoleSelect('parent')}
-          >
-            <View style={[styles.roleIcon, { backgroundColor: '#8b5cf6' }]}>
-              <Ionicons name="people" size={40} color="#ffffff" />
-            </View>
-            <View style={styles.roleInfo}>
-              <Text style={styles.roleName}>Ebeveyn</Text>
-              <Text style={styles.roleDesc}>Çocuklarınızı takip edin</Text>
-            </View>
-            <Ionicons name="chevron-forward" size={24} color="#94a3b8" />
-          </TouchableOpacity>
+          <Text style={styles.roleTitle}>Zeha'ya Hoş Geldiniz!</Text>
+          <Text style={styles.roleSubtitle}>
+            Global yapay zeka asistanınız ile tanışın
+          </Text>
 
           <TouchableOpacity
             style={styles.roleCard}
             onPress={() => handleRoleSelect('adult')}
           >
-            <View style={[styles.roleIcon, { backgroundColor: '#10b981' }]}>
+            <View style={[styles.roleIcon, { backgroundColor: '#6366f1' }]}>
               <Ionicons name="person" size={40} color="#ffffff" />
             </View>
             <View style={styles.roleInfo}>
               <Text style={styles.roleName}>Yetişkin</Text>
-              <Text style={styles.roleDesc}>16+ yaş kullanıcılar</Text>
+              <Text style={styles.roleDesc}>18+ yaş kullanıcılar için</Text>
             </View>
             <Ionicons name="chevron-forward" size={24} color="#94a3b8" />
+          </TouchableOpacity>
+
+          <View style={styles.infoBox}>
+            <Ionicons name="information-circle" size={20} color="#6366f1" />
+            <Text style={styles.infoText}>
+              <Text style={styles.infoBold}>Kids Mode: </Text>
+              Çocuk hesapları sadece ebeveyn tarafından oluşturulabilir. 
+              Kayıt olduktan sonra Dashboard'dan çocuk ekleyebilirsiniz.
+            </Text>
+          </View>
+
+          <View style={styles.divider}>
+            <View style={styles.dividerLine} />
+            <Text style={styles.dividerText}>veya</Text>
+            <View style={styles.dividerLine} />
+          </View>
+
+          <TouchableOpacity
+            style={styles.guestCard}
+            onPress={() => {
+              Alert.alert(
+                'Misafir Girişi',
+                'Misafir modu yakında aktif olacak',
+                [{ text: 'Tamam' }]
+              );
+            }}
+          >
+            <Ionicons name="eye-outline" size={24} color="#94a3b8" />
+            <Text style={styles.guestText}>Misafir Olarak Devam Et</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
