@@ -3,8 +3,8 @@ import { ChatMessage, SendMessageRequest } from '../../types';
 
 export const chatApi = {
   // Create chat session
-  createSession: async (mode: string = 'general'): Promise<{ session_id: string }> => {
-    const response = await apiClient.post('/chat/sessions', { mode });
+  createSession: async (userId: string, mode: string = 'general'): Promise<{ id: string }> => {
+    const response = await apiClient.post(`/sessions?user_id=${userId}`, { mode });
     return response.data;
   },
 
