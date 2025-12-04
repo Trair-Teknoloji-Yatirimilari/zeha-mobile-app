@@ -101,3 +101,124 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: |
+  Zeha - Global AI Assistant with Kids Mode
+  - Chat streaming functionality with SSE (Server-Sent Events)
+  - Authentication (login/register)
+  - Subscription management (PRO membership)
+  - Parent dashboard
+  - Kids account management
+  - Time settings for kids
+
+backend:
+  - task: "Authentication API"
+    implemented: true
+    working: "NA"
+    file: "External API - https://zeha.trairx.com/api/auth/*"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Using external production backend. Need to test /auth/login and /auth/register endpoints."
+  
+  - task: "Chat Streaming API (SSE)"
+    implemented: true
+    working: "NA"
+    file: "External API - https://zeha.trairx.com/api/chat/stream"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Fixed hardcoded URL in chat.ts. Now using consistent API_BASE_URL. SSE endpoint needs testing with real authentication."
+  
+  - task: "Subscription API"
+    implemented: true
+    working: "NA"
+    file: "External API - https://zeha.trairx.com/api/subscription/*"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Endpoints: /verify, /status, /cancel, /restore. Need to test with valid purchase tokens."
+  
+  - task: "Parent Dashboard API"
+    implemented: true
+    working: "NA"
+    file: "External API - https://zeha.trairx.com/api/parent/*"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Endpoints: /dashboard, /alerts. Requires PRO subscription."
+  
+  - task: "Settings API"
+    implemented: true
+    working: "NA"
+    file: "External API - https://zeha.trairx.com/api/settings/*"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Time settings endpoints for kid accounts."
+
+frontend:
+  - task: "API Client Configuration"
+    implemented: true
+    working: true
+    file: "/app/frontend/lib/api/client.ts"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "apiClient configured with correct base URL (https://zeha.trairx.com/api). Auth token interceptor working."
+  
+  - task: "Chat Streaming Client"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/lib/api/chat.ts"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Fixed hardcoded URL bug. Now using API_BASE_URL variable. SSE streaming implementation with fetch API ready. Needs testing."
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: false
+  notes: |
+    - This is a forked task using external production backend
+    - Backend at https://zeha.trairx.com/api (confirmed by user)
+    - All endpoints have been tested by backend team
+    - Frontend is API client only
+
+test_plan:
+  current_focus:
+    - "Authentication API"
+    - "Chat Streaming API (SSE)"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "main"
+    message: |
+      Fixed hardcoded URL in chat.ts (line 49). All API calls now use consistent base URL.
+      Ready for backend endpoint testing. Test authentication first, then chat streaming.
+      User confirmed backend is production-ready at https://zeha.trairx.com/api
