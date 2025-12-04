@@ -80,7 +80,10 @@ export default function KidsScreen() {
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Çocuklar</Text>
-        <TouchableOpacity style={styles.addButton}>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => router.push('/add-kid' as any)}
+        >
           <Ionicons name="add" size={24} color="#f8fafc" />
         </TouchableOpacity>
       </View>
