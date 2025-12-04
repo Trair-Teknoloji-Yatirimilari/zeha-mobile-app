@@ -20,14 +20,7 @@ import { useChatStore } from '../../lib/store/chatStore';
 import { chatApi } from '../../lib/api/chat';
 import { ChatMode } from '../../types';
 
-interface ChatModeOption {
-  value: ChatMode;
-  label: string;
-  icon: string;
-  color: string;
-}
-
-const CHAT_MODES: ChatModeOption[] = [
+const CHAT_MODES = [
   { value: 'general', label: 'Genel', icon: 'chatbubbles', color: '#6366f1' },
   { value: 'teacher', label: 'Öğretmen', icon: 'school', color: '#10b981' },
   { value: 'homework', label: 'Ödev', icon: 'book', color: '#f59e0b' },
