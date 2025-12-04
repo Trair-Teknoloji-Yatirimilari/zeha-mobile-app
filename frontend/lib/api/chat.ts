@@ -2,6 +2,18 @@ import { apiClient } from './client';
 import { ChatMessage, SendMessageRequest } from '../../types';
 
 export const chatApi = {
+  // Create chat session
+  createSession: async (mode: string = 'general'): Promise<{ session_id: string }> => {
+    const response = await apiClient.post('/chat/sessions', { mode });
+    return response.data;
+  },
+
+  // Get messages for session
+  getMessages: async (sessionId: string): Promise<ChatMessage[]> => {
+    const response = await apiClient.get(`/messages/${sessionId}`);
+    return response.data;
+  },
+
   sendMessage: async (data: SendMessageRequest): Promise<ChatMessage> => {
     const response = await apiClient.post<ChatMessage>('/chat/message', data);
     return response.data;
