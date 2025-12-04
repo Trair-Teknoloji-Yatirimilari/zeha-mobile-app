@@ -138,6 +138,11 @@ class IAPService {
   }
 
   async restorePurchases() {
+    if (!this.isAvailable) {
+      Alert.alert('Geliştirme Modu', 'IAP restore sadece native build\'de çalışır.');
+      return;
+    }
+
     try {
       await this.initialize();
 
