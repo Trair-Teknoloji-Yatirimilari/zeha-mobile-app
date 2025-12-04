@@ -1,13 +1,30 @@
-import * as InAppPurchases from 'expo-in-app-purchases';
 import { Platform, Alert } from 'react-native';
 import { subscriptionApi } from '../api/subscription';
 import { useSubscriptionStore } from '../store/subscriptionStore';
 import { SUBSCRIPTION_PRODUCTS, SubscriptionPlatform } from '../../types/subscription';
 
+// Conditional import for IAP (only works in native builds, not Expo Go)
+let InAppPurchases: any = null;
+try {
+  InAppPurchases = require('expo-in-app-purchases');
+} catch (e) {
+  console.warn('IAP module not available - running in development mode');
+}
+
 class IAPService {
   private isInitialized = false;
+  private isAvailable = false;
+
+  constructor() {
+    this.isAvailable = InAppPurchases !== null;
+  }
 
   async initialize() {
+    if (!this.isAvailable) {
+      console.warn('IAP not available - development mode');
+      return;
+    }
+
     if (this.isInitialized) return;
 
     try {
