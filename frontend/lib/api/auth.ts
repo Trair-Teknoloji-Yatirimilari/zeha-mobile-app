@@ -30,6 +30,11 @@ export const authApi = {
     return response.data;
   },
 
+  forgotPassword: async (email: string): Promise<{ success: boolean; message: string }> => {
+    const response = await apiClient.post('/auth/forgot-password', { email });
+    return response.data;
+  },
+
   deleteAccount: async (): Promise<{ success: boolean; message: string }> => {
     const response = await apiClient.delete('/account/delete');
     // Clear local storage after successful deletion
