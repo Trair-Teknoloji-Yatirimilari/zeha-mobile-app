@@ -60,17 +60,20 @@ export default function ProfileScreen() {
                   style: 'destructive',
                   onPress: async () => {
                     try {
-                      // TODO: Backend'de /api/account/delete endpoint'i eklenecek
+                      const response = await authApi.deleteAccount();
                       Alert.alert(
-                        'Hesap Silme',
-                        'Hesap silme talebiniz alındı. 24 saat içinde hesabınız kalıcı olarak silinecektir. Destek ekibimiz tarafından onaylanacaktır.',
+                        'Başarılı',
+                        response.message || 'Hesabınız başarıyla silindi.',
                         [{ text: 'Tamam', onPress: () => {
                           logout();
-                          router.replace('/(auth)/welcome');
+                          router.replace('/');
                         }}]
                       );
-                    } catch (error) {
-                      Alert.alert('Hata', 'Hesap silinirken bir hata oluştu. Lütfen tekrar deneyin.');
+                    } catch (error: any) {
+                      Alert.alert(
+                        'Hata',
+                        error.response?.data?.message || 'Hesap silinirken bir hata oluştu. Lütfen tekrar deneyin veya destek ekibiyle iletişime geçin.'
+                      );
                     }
                   },
                 },
