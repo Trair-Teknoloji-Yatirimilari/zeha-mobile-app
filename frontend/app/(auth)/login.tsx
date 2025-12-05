@@ -201,6 +201,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
   },
+  forgotPassword: {
+    marginTop: 16,
+    alignItems: 'center',
+  },
+  forgotPasswordText: {
+    color: '#6366f1',
+    fontSize: 14,
+    fontWeight: '500',
+  },
   registerLink: {
     marginTop: 24,
     alignItems: 'center',
