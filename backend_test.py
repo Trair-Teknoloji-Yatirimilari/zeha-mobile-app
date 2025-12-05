@@ -563,19 +563,19 @@ def test_forgot_password():
     """Test POST /api/auth/forgot-password"""
     print_section("TEST 9: Forgot Password (NEW ENDPOINT)")
     
-    # Use a test email
+    # Use a test email - try as query parameter based on 422 error
     test_email = "test@example.com"
     
-    payload = {
-        "email": test_email
-    }
-    
     log_info(f"Testing forgot password with email: {test_email}")
+    log_info("Note: API expects email as query parameter")
+    
+    # Try with query parameter
+    params = {"email": test_email}
     
     try:
         response = requests.post(
             f"{BASE_URL}/auth/forgot-password",
-            json=payload,
+            params=params,
             timeout=TIMEOUT
         )
         
@@ -594,6 +594,10 @@ def test_forgot_password():
             if data.get('success'):
                 log_success(f"Success message: {data.get('message', 'N/A')}")
             return True
+        elif response.status_code == 422:
+            log_error("❌ Validation error (422) - Check API documentation for correct format")
+            log_error(f"Response: {response.text}")
+            return False
         else:
             log_warning(f"Unexpected status code: {response.status_code}")
             log_info(f"Response: {response.text}")
