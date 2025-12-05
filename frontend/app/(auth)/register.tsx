@@ -43,6 +43,11 @@ export default function RegisterScreen() {
       return;
     }
 
+    if (!acceptedPrivacy || !acceptedTerms) {
+      Alert.alert('Hata', 'Lütfen Gizlilik Politikası ve Kullanım Koşullarını kabul edin');
+      return;
+    }
+
     if (role === 'kids' && !age) {
       Alert.alert('Hata', 'Lütfen yaşınızı girin');
       return;
