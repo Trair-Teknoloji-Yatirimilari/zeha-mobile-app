@@ -233,7 +233,13 @@ export default function RegisterScreen() {
               )}
             </View>
             <Text style={styles.checkboxText}>
-              <Text style={styles.checkboxLink} onPress={() => Alert.alert('Gizlilik Politikası', 'https://zeha.trairx.com/privacy adresinde görüntüleyebilirsiniz.')}>
+              <Text 
+                style={styles.checkboxLink} 
+                onPress={(e) => {
+                  e.stopPropagation();
+                  Linking.openURL('https://zeha.trairx.com/privacy-policy');
+                }}
+              >
                 Gizlilik Politikasını
               </Text>
               {' '}okudum ve kabul ediyorum.
@@ -252,7 +258,13 @@ export default function RegisterScreen() {
               )}
             </View>
             <Text style={styles.checkboxText}>
-              <Text style={styles.checkboxLink} onPress={() => Alert.alert('Kullanım Koşulları', 'https://zeha.trairx.com/terms adresinde görüntüleyebilirsiniz.')}>
+              <Text 
+                style={styles.checkboxLink}
+                onPress={(e) => {
+                  e.stopPropagation();
+                  Linking.openURL('https://zeha.trairx.com/terms-of-service');
+                }}
+              >
                 Kullanım Koşullarını
               </Text>
               {' '}okudum ve kabul ediyorum.
