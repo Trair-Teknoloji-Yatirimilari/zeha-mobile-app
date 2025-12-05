@@ -71,6 +71,11 @@ export default function WelcomeScreen() {
             Devam ederek Gizlilik Politikasını ve Kullanım Koşullarını kabul etmiş olursunuz.
           </Text>
 
+          {/* Copyright Text */}
+          <Text style={styles.copyrightText}>
+            © 2025 TrairX Technology O.Ü — Tüm Hakları Saklıdır.
+          </Text>
+
           <TouchableOpacity
             style={styles.guestButton}
             onPress={() => {
