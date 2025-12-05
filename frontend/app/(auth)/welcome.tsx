@@ -97,13 +97,18 @@ const styles = StyleSheet.create({
     marginTop: 48,
   },
   iconContainer: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: 160,
+    height: 160,
+    borderRadius: 80,
     backgroundColor: '#1e293b',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 24,
+    padding: 20,
+  },
+  logo: {
+    width: 120,
+    height: 120,
   },
   title: {
     fontSize: 48,
