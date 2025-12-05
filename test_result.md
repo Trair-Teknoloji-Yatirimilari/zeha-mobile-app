@@ -198,6 +198,36 @@ backend:
       - working: "NA"
         agent: "testing"
         comment: "NOT TESTED - Lower priority endpoint. Can be tested in future if needed."
+  
+  - task: "Forgot Password API"
+    implemented: true
+    working: true
+    file: "External API - https://zeha.trairx.com/api/auth/forgot-password"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "New endpoint deployed. Needs testing before EAS build."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED SUCCESSFULLY (2025-12-05) - POST /auth/forgot-password?email={email}: Working correctly (200 OK). Accepts email as query parameter. Returns {success: true, message: 'Eğer email sistemimizde kayıtlıysa, şifre sıfırlama linki gönderildi.', email_sent: true}. Endpoint triggers email sending process. Ready for production use."
+  
+  - task: "Account Delete API"
+    implemented: true
+    working: true
+    file: "External API - https://zeha.trairx.com/api/account/delete"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "New endpoint deployed. Needs testing before EAS build."
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED SUCCESSFULLY (2025-12-05) - DELETE /account/delete: Working perfectly (200 OK). Requires Authorization Bearer token. Returns {success: true, message: 'Hesabınız başarıyla silindi'}. Account deletion verified by attempting login after deletion (returns 401 as expected). Endpoint fully functional and ready for production use."
 
 frontend:
   - task: "API Client Configuration"
