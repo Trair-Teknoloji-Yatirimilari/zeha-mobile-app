@@ -50,6 +50,32 @@ export default function LoginScreen() {
     }
   };
 
+  const handleForgotPassword = async () => {
+    if (!forgotEmail || !forgotEmail.includes('@')) {
+      Alert.alert('Hata', 'Lütfen geçerli bir email adresi girin');
+      return;
+    }
+
+    setForgotLoading(true);
+    try {
+      await authApi.forgotPassword(forgotEmail);
+      setShowForgotModal(false);
+      setForgotEmail('');
+      Alert.alert(
+        'Email Gönderildi',
+        'Şifre sıfırlama linki email adresinize gönderildi. Lütfen gelen kutunuzu kontrol edin.',
+        [{ text: 'Tamam' }]
+      );
+    } catch (error: any) {
+      Alert.alert(
+        'Hata',
+        error.response?.data?.message || 'Email gönderilemedi. Lütfen tekrar deneyin.'
+      );
+    } finally {
+      setForgotLoading(false);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
