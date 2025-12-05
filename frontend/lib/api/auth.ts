@@ -29,4 +29,12 @@ export const authApi = {
     const response = await apiClient.get('/auth/me');
     return response.data;
   },
+
+  deleteAccount: async (): Promise<{ success: boolean; message: string }> => {
+    const response = await apiClient.delete('/account/delete');
+    // Clear local storage after successful deletion
+    await secureStorage.removeItem('authToken');
+    await secureStorage.removeItem('refreshToken');
+    return response.data;
+  },
 };
