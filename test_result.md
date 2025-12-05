@@ -317,7 +317,7 @@ frontend:
 metadata:
   created_by: "main_agent"
   version: "1.0"
-  test_sequence: 2
+  test_sequence: 3
   run_ui: false
   notes: |
     - This is a forked task using external production backend
@@ -325,19 +325,22 @@ metadata:
     - All endpoints have been tested by backend team
     - Frontend is API client only
     - Testing completed on 2025-12-04 by testing agent
+    - New endpoints tested on 2025-12-05 (forgot-password, account delete)
 
 test_plan:
   current_focus:
-    - "Authentication Flow (Registration & Login)"
-  stuck_tasks:
-    - "Authentication Flow (Registration & Login)"
+    - "Forgot Password API"
+    - "Account Delete API"
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
   notes: |
-    Frontend UI testing completed on 2025-12-04.
-    CRITICAL BUG FOUND: expo-secure-store not compatible with web environment.
-    This blocks all authentication functionality.
-    Main agent must fix SecureStore implementation before auth can work.
+    NEW ENDPOINTS TESTING COMPLETED (2025-12-05):
+    - POST /auth/forgot-password - WORKING ✅
+    - DELETE /account/delete - WORKING ✅
+    
+    Both endpoints ready for EAS build.
+    All backend endpoints are now functional.
 
 agent_communication:
   - agent: "main"
