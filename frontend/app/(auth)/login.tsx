@@ -114,6 +114,17 @@ export default function LoginScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity
+            style={styles.forgotPassword}
+            onPress={() => Alert.alert(
+              'Şifremi Unuttum',
+              'Şifre sıfırlama linki email adresinize gönderilecek. Bu özellik yakında aktif olacak.',
+              [{ text: 'Tamam' }]
+            )}
+          >
+            <Text style={styles.forgotPasswordText}>Şifremi Unuttum</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
             style={styles.registerLink}
             onPress={() => router.push('/(auth)/register')}
           >
