@@ -182,6 +182,14 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     marginTop: -8,
   },
+  copyrightText: {
+    fontSize: 11,
+    color: '#475569',
+    textAlign: 'center',
+    paddingHorizontal: 16,
+    lineHeight: 14,
+    marginTop: 8,
+  },
   guestButton: {
     paddingVertical: 16,
     alignItems: 'center',
