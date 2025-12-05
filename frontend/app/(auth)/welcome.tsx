@@ -102,18 +102,15 @@ const styles = StyleSheet.create({
     marginTop: 48,
   },
   iconContainer: {
-    width: 160,
-    height: 160,
-    borderRadius: 80,
-    backgroundColor: '#1e293b',
+    width: 200,
+    height: 200,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 24,
-    padding: 20,
   },
   logo: {
-    width: 120,
-    height: 120,
+    width: 200,
+    height: 200,
   },
   title: {
     fontSize: 48,
@@ -168,6 +165,14 @@ const styles = StyleSheet.create({
     color: '#f8fafc',
     fontSize: 18,
     fontWeight: '600',
+  },
+  disclaimerText: {
+    fontSize: 12,
+    color: '#64748b',
+    textAlign: 'center',
+    paddingHorizontal: 16,
+    lineHeight: 16,
+    marginTop: -8,
   },
   guestButton: {
     paddingVertical: 16,
