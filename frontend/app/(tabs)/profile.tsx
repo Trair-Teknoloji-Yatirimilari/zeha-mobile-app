@@ -309,6 +309,23 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#ef4444',
   },
+  deleteButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#1e293b',
+    borderRadius: 12,
+    paddingVertical: 16,
+    gap: 8,
+    borderWidth: 1,
+    borderColor: '#dc2626',
+    marginTop: 12,
+  },
+  deleteText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#dc2626',
+  },
   version: {
     textAlign: 'center',
     fontSize: 12,
