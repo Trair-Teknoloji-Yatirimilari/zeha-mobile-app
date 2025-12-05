@@ -102,15 +102,18 @@ const styles = StyleSheet.create({
     marginTop: 48,
   },
   iconContainer: {
-    width: 200,
-    height: 200,
+    width: 160,
+    height: 160,
+    borderRadius: 80,
+    backgroundColor: '#1e293b',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 24,
+    overflow: 'hidden',
   },
   logo: {
-    width: 200,
-    height: 200,
+    width: 140,
+    height: 140,
   },
   title: {
     fontSize: 48,
