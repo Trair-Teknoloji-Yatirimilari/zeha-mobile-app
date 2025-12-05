@@ -184,6 +184,12 @@ export default function ProfileScreen() {
           <Text style={styles.logoutText}>Çıkış Yap</Text>
         </TouchableOpacity>
 
+        {/* Delete Account Button */}
+        <TouchableOpacity style={styles.deleteButton} onPress={handleDeleteAccount}>
+          <Ionicons name="trash" size={20} color="#dc2626" />
+          <Text style={styles.deleteText}>Hesabı Sil</Text>
+        </TouchableOpacity>
+
         {/* Version */}
         <Text style={styles.version}>Zeha v1.0.0</Text>
       </ScrollView>
