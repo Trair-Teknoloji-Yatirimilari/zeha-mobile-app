@@ -22,7 +22,11 @@ export default function WelcomeScreen() {
         {/* Logo/Header */}
         <View style={styles.header}>
           <View style={styles.iconContainer}>
-            <Ionicons name="sparkles" size={64} color="#6366f1" />
+            <Image
+              source={require('../../assets/images/icon.png')}
+              style={styles.logo}
+              resizeMode="contain"
+            />
           </View>
           <Text style={styles.title}>Zeha</Text>
           <Text style={styles.subtitle}>
