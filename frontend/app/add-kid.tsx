@@ -11,10 +11,12 @@ import {
   ActivityIndicator,
   ScrollView,
 } from 'react-native';
+import axios from 'axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { apiClient } from '../lib/api/client';
+import { dashboardApi } from '../lib/api/dashboard';
 
 type AgeGroup = '4-6' | '7-9' | '10-12' | '13-15';
 
@@ -33,6 +35,18 @@ export default function AddKidScreen() {
     { value: '10-12', label: '10-12 yaş', color: '#f59e0b' },
     { value: '13-15', label: '13-15 yaş', color: '#8b5cf6' },
   ];
+
+  const confirmKidCreation = async (targetEmail: string) => {
+    try {
+      const dashboard = await dashboardApi.getDashboard();
+      return dashboard.kids.some(
+        (kid) => kid.email?.toLowerCase() === targetEmail.trim().toLowerCase()
+      );
+    } catch (error) {
+      console.warn('Kid creation verification failed', error);
+      return false;
+    }
+  };
 
   const handleAddKid = async () => {
     if (!name || !email || !password || !age) {
@@ -69,6 +83,28 @@ export default function AddKidScreen() {
       );
     } catch (error: any) {
       console.error('Add kid failed:', error);
+
+      const isTimeout =
+        axios.isAxiosError(error) &&
+        (error.response?.status === 524 || error.code === 'ECONNABORTED');
+
+      if (isTimeout) {
+        const kidExists = await confirmKidCreation(email);
+        if (kidExists) {
+          Alert.alert(
+            'Başarılı! 🎉',
+            `${name} için hesap oluşturuldu ancak sunucu geç yanıt verdi. Çocuk listesinde görebilirsiniz.`,
+            [
+              {
+                text: 'Tamam',
+                onPress: () => router.back(),
+              },
+            ]
+          );
+          return;
+        }
+      }
+
       Alert.alert(
         'Hata',
         error.response?.data?.message || 'Çocuk hesabı oluşturulamadı'
