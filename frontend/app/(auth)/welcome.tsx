@@ -66,6 +66,11 @@ export default function WelcomeScreen() {
             <Text style={styles.secondaryButtonText}>Hesap Oluştur</Text>
           </TouchableOpacity>
 
+          {/* Disclaimer Text */}
+          <Text style={styles.disclaimerText}>
+            Devam ederek Gizlilik Politikasını ve Kullanım Koşullarını kabul etmiş olursunuz.
+          </Text>
+
           <TouchableOpacity
             style={styles.guestButton}
             onPress={() => {
