@@ -757,6 +757,10 @@ def main():
     test_parent_dashboard()
     test_parent_alerts()
     
+    # Priority 3: NEW ENDPOINTS (HIGH)
+    test_forgot_password()
+    test_account_delete()
+    
     # Print summary
     success = print_summary()
     
