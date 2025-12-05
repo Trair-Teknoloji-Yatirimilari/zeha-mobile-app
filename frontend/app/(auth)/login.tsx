@@ -145,11 +145,7 @@ export default function LoginScreen() {
 
           <TouchableOpacity
             style={styles.forgotPassword}
-            onPress={() => Alert.alert(
-              'Şifremi Unuttum',
-              'Şifre sıfırlama linki email adresinize gönderilecek. Bu özellik yakında aktif olacak.',
-              [{ text: 'Tamam' }]
-            )}
+            onPress={() => setShowForgotModal(true)}
           >
             <Text style={styles.forgotPasswordText}>Şifremi Unuttum</Text>
           </TouchableOpacity>
