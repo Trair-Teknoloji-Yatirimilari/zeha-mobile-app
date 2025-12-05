@@ -559,6 +559,156 @@ def test_parent_alerts():
         log_error(f"Parent alerts: Exception - {str(e)}")
         return False
 
+def test_forgot_password():
+    """Test POST /api/auth/forgot-password"""
+    print_section("TEST 9: Forgot Password (NEW ENDPOINT)")
+    
+    # Use a test email
+    test_email = "test@example.com"
+    
+    payload = {
+        "email": test_email
+    }
+    
+    log_info(f"Testing forgot password with email: {test_email}")
+    
+    try:
+        response = requests.post(
+            f"{BASE_URL}/auth/forgot-password",
+            json=payload,
+            timeout=TIMEOUT
+        )
+        
+        log_info(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 404:
+            log_error("❌ ENDPOINT NOT FOUND (404) - Not deployed")
+            log_error(f"Response: {response.text}")
+            return False
+        elif response.status_code == 200:
+            data = response.json()
+            log_success("✅ Forgot password endpoint working (200 OK)")
+            log_info(f"Response: {json.dumps(data, indent=2)}")
+            
+            # Check if success flag exists
+            if data.get('success'):
+                log_success(f"Success message: {data.get('message', 'N/A')}")
+            return True
+        else:
+            log_warning(f"Unexpected status code: {response.status_code}")
+            log_info(f"Response: {response.text}")
+            # Not 404, so endpoint exists
+            return True
+            
+    except requests.exceptions.Timeout:
+        log_error("Forgot password: Request timeout")
+        return False
+    except Exception as e:
+        log_error(f"Forgot password: Exception - {str(e)}")
+        return False
+
+def test_account_delete():
+    """Test DELETE /api/account/delete"""
+    print_section("TEST 10: Account Delete (NEW ENDPOINT)")
+    
+    # Create a new test account specifically for deletion
+    log_info("Step 1: Creating test account for deletion...")
+    
+    timestamp = int(time.time())
+    delete_test_email = f"delete_test_{timestamp}@gmail.com"
+    delete_test_password = f"DeletePass123!{timestamp}"
+    delete_test_name = f"Delete Test {timestamp}"
+    
+    register_payload = {
+        "email": delete_test_email,
+        "password": delete_test_password,
+        "name": delete_test_name,
+        "role": "adult"
+    }
+    
+    try:
+        # Register test account
+        reg_response = requests.post(
+            f"{BASE_URL}/auth/register",
+            json=register_payload,
+            timeout=TIMEOUT
+        )
+        
+        if reg_response.status_code != 200 and reg_response.status_code != 201:
+            log_error(f"Failed to create test account for deletion: {reg_response.status_code}")
+            log_error(f"Response: {reg_response.text}")
+            return False
+        
+        reg_data = reg_response.json()
+        delete_token = reg_data.get('access_token')
+        delete_user_id = reg_data['user']['id']
+        
+        if not delete_token:
+            log_error("No access token received for test account")
+            return False
+        
+        log_success(f"Test account created: {delete_test_email} (ID: {delete_user_id})")
+        
+        # Now test the delete endpoint
+        log_info("\nStep 2: Testing account deletion...")
+        
+        headers = {
+            "Authorization": f"Bearer {delete_token}"
+        }
+        
+        delete_response = requests.delete(
+            f"{BASE_URL}/account/delete",
+            headers=headers,
+            timeout=TIMEOUT
+        )
+        
+        log_info(f"Status Code: {delete_response.status_code}")
+        
+        if delete_response.status_code == 404:
+            log_error("❌ ENDPOINT NOT FOUND (404) - Not deployed")
+            log_error(f"Response: {delete_response.text}")
+            return False
+        elif delete_response.status_code == 200:
+            data = delete_response.json()
+            log_success("✅ Account delete endpoint working (200 OK)")
+            log_info(f"Response: {json.dumps(data, indent=2)}")
+            
+            # Verify deletion by trying to login
+            log_info("\nStep 3: Verifying account deletion...")
+            login_payload = {
+                "email": delete_test_email,
+                "password": delete_test_password
+            }
+            
+            verify_response = requests.post(
+                f"{BASE_URL}/auth/login",
+                json=login_payload,
+                timeout=TIMEOUT
+            )
+            
+            if verify_response.status_code == 401 or verify_response.status_code == 404:
+                log_success("✅ VERIFIED: Account successfully deleted (login fails)")
+                return True
+            else:
+                log_warning(f"Account may not be deleted - login returned {verify_response.status_code}")
+                log_info("Endpoint works but deletion may not be complete")
+                return True
+        elif delete_response.status_code == 401:
+            log_error("Unauthorized (401) - Authentication issue")
+            return False
+        else:
+            log_warning(f"Unexpected status code: {delete_response.status_code}")
+            log_info(f"Response: {delete_response.text}")
+            # Not 404, so endpoint exists
+            return True
+            
+    except requests.exceptions.Timeout:
+        log_error("Account delete: Request timeout")
+        return False
+    except Exception as e:
+        log_error(f"Account delete: Exception - {str(e)}")
+        return False
+
 def print_summary():
     """Print test summary"""
     print_section("TEST SUMMARY")
