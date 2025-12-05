@@ -39,6 +39,49 @@ export default function ProfileScreen() {
     );
   };
 
+  const handleDeleteAccount = async () => {
+    Alert.alert(
+      '⚠️ Hesabı Sil',
+      'Hesabınızı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz ve tüm verileriniz kalıcı olarak silinecektir.',
+      [
+        { text: 'İptal', style: 'cancel' },
+        {
+          text: 'Hesabı Sil',
+          style: 'destructive',
+          onPress: async () => {
+            // İkinci onay
+            Alert.alert(
+              'Son Onay',
+              'Tüm sohbet geçmişiniz, ayarlarınız ve abonelik bilgileriniz silinecek. Devam etmek istiyor musunuz?',
+              [
+                { text: 'İptal', style: 'cancel' },
+                {
+                  text: 'Evet, Sil',
+                  style: 'destructive',
+                  onPress: async () => {
+                    try {
+                      // TODO: Backend'de /api/account/delete endpoint'i eklenecek
+                      Alert.alert(
+                        'Hesap Silme',
+                        'Hesap silme talebiniz alındı. 24 saat içinde hesabınız kalıcı olarak silinecektir. Destek ekibimiz tarafından onaylanacaktır.',
+                        [{ text: 'Tamam', onPress: () => {
+                          logout();
+                          router.replace('/(auth)/welcome');
+                        }}]
+                      );
+                    } catch (error) {
+                      Alert.alert('Hata', 'Hesap silinirken bir hata oluştu. Lütfen tekrar deneyin.');
+                    }
+                  },
+                },
+              ]
+            );
+          },
+        },
+      ]
+    );
+  };
+
   const getAgeGroupLabel = (age?: number) => {
     if (!age) return '-';
     if (age >= 4 && age <= 6) return '4-6 yaş grubu';
