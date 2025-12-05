@@ -220,6 +220,44 @@ export default function RegisterScreen() {
             </View>
           )}
 
+          {/* Privacy Policy Checkbox */}
+          <TouchableOpacity
+            style={styles.checkboxContainer}
+            onPress={() => setAcceptedPrivacy(!acceptedPrivacy)}
+            activeOpacity={0.7}
+          >
+            <View style={[styles.checkbox, acceptedPrivacy && styles.checkboxChecked]}>
+              {acceptedPrivacy && (
+                <Ionicons name="checkmark" size={16} color="#ffffff" />
+              )}
+            </View>
+            <Text style={styles.checkboxText}>
+              <Text style={styles.checkboxLink} onPress={() => Alert.alert('Gizlilik Politikası', 'https://zeha.trairx.com/privacy adresinde görüntüleyebilirsiniz.')}>
+                Gizlilik Politikasını
+              </Text>
+              {' '}okudum ve kabul ediyorum.
+            </Text>
+          </TouchableOpacity>
+
+          {/* Terms of Service Checkbox */}
+          <TouchableOpacity
+            style={styles.checkboxContainer}
+            onPress={() => setAcceptedTerms(!acceptedTerms)}
+            activeOpacity={0.7}
+          >
+            <View style={[styles.checkbox, acceptedTerms && styles.checkboxChecked]}>
+              {acceptedTerms && (
+                <Ionicons name="checkmark" size={16} color="#ffffff" />
+              )}
+            </View>
+            <Text style={styles.checkboxText}>
+              <Text style={styles.checkboxLink} onPress={() => Alert.alert('Kullanım Koşulları', 'https://zeha.trairx.com/terms adresinde görüntüleyebilirsiniz.')}>
+                Kullanım Koşullarını
+              </Text>
+              {' '}okudum ve kabul ediyorum.
+            </Text>
+          </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.registerButton}
             onPress={handleRegister}
