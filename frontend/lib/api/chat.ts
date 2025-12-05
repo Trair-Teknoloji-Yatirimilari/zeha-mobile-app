@@ -42,8 +42,8 @@ export const chatApi = {
         throw new Error('No authentication token found');
       }
 
-      // Backend API base URL - same as in client.ts
-      const API_BASE_URL = 'https://zeha.trairx.com/api';
+      // Backend API base URL - use environment variable
+      const API_BASE_URL = (process.env.EXPO_PUBLIC_BACKEND_URL || 'https://zeha.trairx.com') + '/api';
 
       // Increased timeout to 30 seconds
       const controller = new AbortController();
