@@ -535,3 +535,6 @@ agent_communication:
   - agent: "main"
     message: |
       2025-12-05: Parent dashboard flow tested end-to-end with new trial PRO user. GET /parent/dashboard and /parent/alerts both 200 (no data yet). POST /parent/kids/create eventually succeeds but returns Cloudflare 524 to client (kid shows up afterwards). GET /settings/time/{kidId} still 404. POST /subscription/restore requires platform+receipt and responds \"No previous purchases found\" for trial accounts.
+  - agent: "main"
+    message: |
+      2025-12-05: Frontend now caches time settings locally (SecureStore/localStorage) and automatically falls back whenever /settings/time endpoints fail. Add Kid screen also handles Cloudflare 524 responses by verifying the dashboard before notifying users of success.
