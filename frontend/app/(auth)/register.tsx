@@ -29,6 +29,8 @@ export default function RegisterScreen() {
   const [age, setAge] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
 
   const handleRoleSelect = (selectedRole: UserRole) => {
     setRole(selectedRole);
